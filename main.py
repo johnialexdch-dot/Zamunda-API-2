@@ -64,3 +64,12 @@ def stream(type: str, id: str):
 @app.get('/')
 def index(request: Request):
     return templates.TemplateResponse('index.html', {'request': request})
+
+import httpx
+
+def get_title_from_imdb(imdb_id: str) -> str:
+    url = f"https://www.omdbapi.com/?i={imdb_id}&apikey=demo"  # Сменете demo с ваш ключ
+    response = httpx.get(url)
+    data = response.json()
+    return data.get("Title", "")
+
