@@ -27,6 +27,39 @@ app.include_router(sub_categories.router)
 app.include_router(torrents.router)
 app.include_router(users.router)
 
+from fastapi.responses import JSONResponse
+
+@app.get("/manifest.json")
+def manifest():
+    return {
+        "id": "org.zamunda.addon",
+        "version": "1.0.0",
+        "name": "Stremio Zamunda",
+        "description": "Streams movies by scraping torrents from Zamunda.",
+        "icon": "https://github.com/murrou-cell/zamunda-api/blob/main/logo/logo.jpg?raw=true",
+        "resources": ["stream"],
+        "types": ["movie", "series"],
+        "idPrefixes": ["tt"],
+        "catalogs": [],
+        "behaviorHints": {
+            "configurable": True,
+            "configurationRequired": True
+        }
+    }
+
+@app.get("/stream/{type}/{id}")
+def stream(type: str, id: str):
+    # Временно за тест
+    if id == "tt1375666":
+        return JSONResponse([
+            {
+                "title": "Inception 1080p",
+                "infoHash": "d2474e86c95b19b8bcfdb92bc12c9d44667cfa36",
+                "fileIdx": 0
+            }
+        ])
+    return JSONResponse([])
+
 
 @app.get('/')
 def index(request: Request):
