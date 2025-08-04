@@ -68,7 +68,7 @@ def index(request: Request):
 import httpx
 
 def get_title_from_imdb(imdb_id: str) -> str:
-    url = f"https://www.omdbapi.com/?i={imdb_id}&apikey=demo"  # Сменете demo с ваш ключ
+    url = f"https://www.omdbapi.com/?i={imdb_id}&apikey=3715ba65"  # Сменете demo с ваш ключ
     response = httpx.get(url)
     data = response.json()
     return data.get("Title", "")
